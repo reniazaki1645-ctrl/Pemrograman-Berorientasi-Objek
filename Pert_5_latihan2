@@ -1,0 +1,17 @@
+class Sum:
+    def sum(self, a, b):
+        print("Hasil penjumlahan\t:", a + b)
+
+class Multiplication:
+   def multiplication(self, a, b):
+        print("Hasil perkalian\t\t:", a * b)
+
+class Calculator(Sum, Multiplication):
+    def devide(self, a, b):
+         print("Hasil pembagian\t\t:", a // b)
+
+print("===Kalkulator Renia Zaki===")
+calc = Calculator()
+calc.sum(12,4)
+calc.multiplication(12, 4)
+calc.devide(12, 4)
