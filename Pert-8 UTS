@@ -1,0 +1,63 @@
+from abc import ABC, abstractmethod
+class Barang(ABC):
+    def __init__(self, id_barang, nama_barang, kategori, harga_dasar, stok):
+        self.id = id_barang
+        self.nama = nama_barang
+        self.kategori = kategori
+        self.harga_dasar = harga_dasar
+        self.stok = stok
+
+    def info(self):
+        print(f"ID Barang    : {self.id}")
+        print(f"Nama Barang  : {self.nama}")
+        print(f"Kategori     : {self.kategori}")
+        print(f"Harga Dasar  : {self.harga_dasar}")
+        print(f"Stok         : {self.stok}")
+
+    @abstractmethod
+    def hitung_harga_jual(self):
+        pass
+class BarangElektronik(Barang):
+    def __init__(self, id_barang, nama_barang, harga_dasar, stok, garansi_bulan, daya_listrik):
+        super().__init__(id_barang, nama_barang, "Elektronik", harga_dasar, stok)
+        self.garansi = garansi_bulan
+        self.daya = daya_listrik
+
+    def hitung_harga_jual(self):
+        return self.harga_dasar * 1.10  # PPN 10%
+
+    def info(self):
+        super().info()
+        print(f"Garansi      : {self.garansi} bulan")
+        print(f"Daya Listrik : {self.daya} Watt")
+class BarangPakaian(Barang):
+    def __init__(self, id_barang, nama_barang, harga_dasar, stok, ukuran, bahan):
+        super().__init__(id_barang, nama_barang, "Pakaian", harga_dasar, stok)
+        self.ukuran = ukuran
+        self.bahan = bahan
+
+    def hitung_harga_jual(self):
+        harga = self.harga_dasar
+        if self.ukuran in ("XL", "XXL"):
+            harga += 15000
+        if self.bahan.lower() == "premium":
+            harga += 0.05 * self.harga_dasar
+        return harga
+
+    def info(self):
+        super().info()
+        print(f"Ukuran       : {self.ukuran}")
+        print(f"Bahan        : {self.bahan}")
+# Program Utama(Main)
+if __name__ == "__main__":
+    print("===== Data Barang GoStore =====")
+    daftar_barang = [
+        BarangElektronik("E001", "Kipas Angin", 250000, 10, 12, 80),
+        BarangElektronik("E002", "TV LED", 3000000, 5, 24, 120),
+        BarangPakaian("P001", "Kaos Polos", 80000, 20, "L", "Katun"),
+        BarangPakaian("P002", "Jaket Hoodie", 150000, 7, "XL", "Premium")
+    ]
+    for b in daftar_barang:
+        print("-------------------------------")
+        b.info()
+        print(f"Harga Jual   : {b.hitung_harga_jual():,.0f}")
